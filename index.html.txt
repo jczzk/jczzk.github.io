@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Integrador - ADS (2º Semestre)</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --success-color: #10b981;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --muted-color: #64748b;
+            --border-color: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 760px;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+        }
+
+        p.description {
+            font-size: 0.95rem;
+            color: var(--muted-color);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        fieldset {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 22px;
+            background-color: #fff;
+        }
+
+        legend {
+            font-weight: 600;
+            color: var(--primary-color);
+            padding: 0 8px;
+            font-size: 1.05rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 0.92rem;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            font-size: 0.88rem;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: center;
+        }
+
+        .schedule-table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+
+        .schedule-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .conditional-section {
+            display: none;
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        button[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Caixa de Resumo pós-envio */
+        #resumoBox {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #ecfdf5;
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+        }
+
+        #resumoBox h3 {
+            margin-top: 0;
+            color: #065f46;
+            font-size: 1.1rem;
+        }
+
+        #resumoTexto {
+            width: 100%;
+            height: 160px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            background: #fff;
+            border: 1px solid #a7f3d0;
+            border-radius: 6px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .btn-copy {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-copy:hover {
+            background-color: #059669;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Projeto Integrador – ADS (2º Semestre)</h1>
+    <p class="description">Preencha os dados abaixo para mapearmos o perfil técnico, disponibilidade e expectativas da turma antes da nossa reunião de alinhamento.</p>
+
+    <form id="projetoForm">
+        
+        <!-- SEÇÃO 1: IDENTIFICAÇÃO -->
+        <fieldset>
+            <legend>1. Identificação Básica</legend>
+            
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="nome">Nome Completo: *</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Ex: João Silva">
+                </div>
+
+                <div class="form-group">
+                    <label for="ra">RA / Matrícula: *</label>
+                    <input type="text" id="ra" name="ra" required placeholder="Ex: 202612345">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp (com DDD): *</label>
+                    <input type="text" id="whatsapp" name="whatsapp" required placeholder="(21) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="turno_aula">Turno em que estuda: *</label>
+                    <select id="turno_aula" name="turno_aula" required>
+                        <option value="">Selecione...</option>
+                        <option value="Manhã">Manhã</option>
+                        <option value="Noite">Noite</option>
+                        <option value="EAD / Flex">EAD / Flex</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Você pretende participar deste projeto neste semestre? *</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="participar" value="sim" required onclick="toggleSecoes('sim')"> <strong>Sim</strong>, quero participar
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="participar" value="nao" required onclick="toggleSecoes('nao')"> <strong>Não</strong> vou participar no momento
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- SEÇÃO 2: PARA QUEM VAI PARTICIPAR -->
+        <div id="secaoSim" class="conditional-section">
+            
+            <!-- BLOCO 2A: PERFIL TÉCNICO -->
+            <fieldset>
+                <legend>2. Perfil Técnico e Ferramentas</legend>
+
+                <div class="form-group">
+                    <label>Em qual(is) frente(s) você prefere atuar? *</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="Front-end"> Desenvolvimento Front-end (Telas, interface e UX)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="Back-end"> Desenvolvimento Back-end (Lógica, regras e APIs)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="Banco de Dados"> Banco de Dados (Modelagem e consultas)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="Documentação/Requisitos"> Documentação e Requisitos (Diagramas e relatórios)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="QA/Testes"> Testes e Qualidade (QA)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="Gestão/Pitch"> Gestão de Projeto e Apresentação Final</label>
+                        <label class="checkbox-item"><input type="checkbox" name="frente" value="Aberto a aprender"> Ainda estou aprendendo e topo ajudar no que for preciso</label>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="nivel_exp">Nível de familiaridade com código/Git:</label>
+                        <select id="nivel_exp" name="nivel_exp">
+                            <option value="Iniciante">Iniciante (Primeiros passos)</option>
+                            <option value="Básico">Básico (Lógica básica e exercícios)</option>
+                            <option value="Intermediário">Intermediário (Pequenos projetos / Git)</option>
+                            <option value="Avançado">Avançado / Já atuo na área</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="equipamento">Acesso a computador/internet:</label>
+                        <select id="equipamento" name="equipamento">
+                            <option value="PC Próprio + Internet boa">Tenho PC/Notebook próprio e internet boa</option>
+                            <option value="PC Limitado">Tenho PC, mas com hardware limitado</option>
+                            <option value="Apenas Lab Faculdade">Uso apenas os computadores da faculdade</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="github">Link do GitHub (Opcional):</label>
+                        <input type="url" id="github" name="github" placeholder="https://github.com/usuario">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkedin">Link do LinkedIn (Opcional):</label>
+                        <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/usuario">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tecnologia">Sugestão de Stack / Linguagem para a reunião de definição:</label>
+                    <input type="text" id="tecnologia" name="tecnologia" placeholder="Ex: Python, Java, JavaScript, C#, SQL, etc.">
+                </div>
+            </fieldset>
+
+            <!-- BLOCO 2B: ORGANIZAÇÃO E EXPECTATIVAS -->
+            <fieldset>
+                <legend>3. Dinâmica de Equipe e Expectativas</legend>
+
+                <div class="form-group">
+                    <label>Qual é o seu principal objetivo com este projeto? *</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="objetivo" value="Portfólio/Carreira"> Criar um projeto real e robusto para portfólio / LinkedIn</label>
+                        <label class="radio-item"><input type="radio" name="objetivo" value="Aprender na prática"> Aprender a trabalhar em equipe e usar Git na prática</label>
+                        <label class="radio-item"><input type="radio" name="objetivo" value="Cumprir requisito"> Cumprir os requisitos da disciplina com tranquilidade</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Você topa assumir papel de liderança/organização (ex: Tech Lead ou Scrum Master)?</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="lideranca" value="Sim"> Sim, gosto de organizar tarefas e prazos</label>
+                        <label class="radio-item"><input type="radio" name="lideranca" value="Talvez"> Posso ajudar se ninguém quiser</label>
+                        <label class="radio-item"><input type="radio" name="lideranca" value="Não"> Prefiro focar apenas na execução das tarefas</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="grupo_formado">Já tem grupo formado ou colegas específicos com quem quer trabalhar?</label>
+                    <textarea id="grupo_formado" name="grupo_formado" rows="2" placeholder="Se sim, liste os nomes aqui. Se não, alocaremos você em uma equipe equilibrada."></textarea>
+                </div>
+            </fieldset>
+
+            <!-- BLOCO 2C: DISPONIBILIDADE DE HORÁRIOS -->
+            <fieldset>
+                <legend>4. Disponibilidade de Horários</legend>
+
+                <div class="form-group">
+                    <label>Dedicação semanal estimada: *</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="horas_semanais" value="1 a 3h/semana"> Baixa (1 a 3 horas por semana)</label>
+                        <label class="radio-item"><input type="radio" name="horas_semanais" value="4 a 6h/semana"> Média (4 a 6 horas por semana)</label>
+                        <label class="radio-item"><input type="radio" name="horas_semanais" value="Mais de 6h/semana"> Alta (Mais de 6 horas por semana)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Marque os dias e turnos livres para reuniões ou desenvolvimento:</label>
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Dia da Semana</th>
+                                <th>Manhã</th>
+                                <th>Tarde</th>
+                                <th>Noite</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Segunda-feira</td>
+                                <td><input type="checkbox" name="horario_grade" value="Seg (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Seg (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Seg (Noite)"></td>
+                            </tr>
+                            <tr>
+                                <td>Terça-feira</td>
+                                <td><input type="checkbox" name="horario_grade" value="Ter (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Ter (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Ter (Noite)"></td>
+                            </tr>
+                            <tr>
+                                <td>Quarta-feira</td>
+                                <td><input type="checkbox" name="horario_grade" value="Qua (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Qua (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Qua (Noite)"></td>
+                            </tr>
+                            <tr>
+                                <td>Quinta-feira</td>
+                                <td><input type="checkbox" name="horario_grade" value="Qui (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Qui (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Qui (Noite)"></td>
+                            </tr>
+                            <tr>
+                                <td>Sexta-feira</td>
+                                <td><input type="checkbox" name="horario_grade" value="Sex (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Sex (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Sex (Noite)"></td>
+                            </tr>
+                            <tr>
+                                <td>Sábado</td>
+                                <td><input type="checkbox" name="horario_grade" value="Sáb (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Sáb (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Sáb (Noite)"></td>
+                            </tr>
+                            <tr>
+                                <td>Domingo</td>
+                                <td><input type="checkbox" name="horario_grade" value="Dom (Manhã)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Dom (Tarde)"></td>
+                                <td><input type="checkbox" name="horario_grade" value="Dom (Noite)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <label>Formato preferido para reuniões: *</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="formato_reuniao" value="Online (Discord/Meet)"> 100% Online (Discord, Google Meet, Teams)</label>
+                        <label class="radio-item"><input type="radio" name="formato_reuniao" value="Presencial (Faculdade)"> Presencial (Na faculdade, antes/depois da aula)</label>
+                        <label class="radio-item"><input type="radio" name="formato_reuniao" value="Híbrido"> Híbrido / Flexível</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="obs_horario">Observações ou restrições de horário (Opcional):</label>
+                    <input type="text" id="obs_horario" name="obs_horario" placeholder="Ex: Só fico livre após as 22h30 nos dias de semana">
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- SEÇÃO 3: PARA QUEM NÃO VAI PARTICIPAR -->
+        <div id="secaoNao" class="conditional-section">
+            <fieldset>
+                <legend>2. Justificativa de Não Participação</legend>
+
+                <div class="form-group">
+                    <label>Principal motivo para não participar neste semestre: *</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="motivo" value="Trabalho / Estágio"> Falta de tempo devido ao trabalho / estágio</label>
+                        <label class="radio-item"><input type="radio" name="motivo" value="Sobrecarga acadêmica"> Sobrecarga com outras disciplinas da faculdade</label>
+                        <label class="radio-item"><input type="radio" name="motivo" value="Outro projeto"> Já estou participando de outro projeto acadêmico</label>
+                        <label class="radio-item"><input type="radio" name="motivo" value="Motivos pessoais"> Motivos pessoais</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Deseja permanecer no grupo de avisos para acompanhar ou entrar em semestres futuros? *</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="acompanhar" value="Sim"> Sim, quero continuar acompanhando</label>
+                        <label class="radio-item"><input type="radio" name="acompanhar" value="Não"> Não, obrigado(a)</label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <button type="submit">Gerar Resumo / Enviar Resposta</button>
+    </form>
+
+    <!-- ÁREA DE RESUMO AUTOMÁTICO -->
+    <div id="resumoBox">
+        <h3>✅ Resposta registrada! Copie o resumo abaixo e envie no WhatsApp:</h3>
+        <textarea id="resumoTexto" readonly></textarea>
+        <button type="button" class="btn-copy" onclick="copiarResumo()">📋 Copiar Resumo</button>
+    </div>
+</div>
+
+<script>
+    function toggleSecoes(opcao) {
+        const secaoSim = document.getElementById('secaoSim');
+        const secaoNao = document.getElementById('secaoNao');
+        
+        if (opcao === 'sim') {
+            secaoSim.style.display = 'block';
+            secaoNao.style.display = 'none';
+        } else {
+            secaoSim.style.display = 'none';
+            secaoNao.style.display = 'block';
+        }
+    }
+
+    document.getElementById('projetoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+        const ra = document.getElementById('ra').value;
+        const whatsapp = document.getElementById('whatsapp').value;
+        const turno = document.getElementById('turno_aula').value;
+        const participar = document.querySelector('input[name="participar"]:checked')?.value;
+
+        let texto = `*FICHA - PROJETO ADS (2º SEMESTRE)*\n`;
+        texto += `👤 *Nome:* ${nome} (RA: ${ra})\n`;
+        texto += `📱 *WhatsApp:* ${whatsapp} | *Turno:* ${turno}\n`;
+
+        if (participar === 'sim') {
+            const frentes = Array.from(document.querySelectorAll('input[name="frente"]:checked')).map(el => el.value);
+            const nivel = document.getElementById('nivel_exp').value;
+            const equip = document.getElementById('equipamento').value;
+            const tech = document.getElementById('tecnologia').value || 'A definir na reunião';
+            const objetivo = document.querySelector('input[name="objetivo"]:checked')?.value || 'Não informado';
+            const lider = document.querySelector('input[name="lideranca"]:checked')?.value || 'Não informado';
+            const horas = document.querySelector('input[name="horas_semanais"]:checked')?.value || 'Não informado';
+            const formato = document.querySelector('input[name="formato_reuniao"]:checked')?.value || 'Não informado';
+            const horarios = Array.from(document.querySelectorAll('input[name="horario_grade"]:checked')).map(el => el.value);
+            const obs = document.getElementById('obs_horario').value;
+
+            if (frentes.length === 0) {
+                alert('Por favor, selecione pelo menos uma frente de atuação.');
+                return;
+            }
+
+            texto += `✅ *Status:* VAI PARTICIPAR\n`;
+            texto += `💻 *Frentes:* ${frentes.join(', ')}\n`;
+            texto += `📊 *Nível:* ${nivel} | *PC:* ${equip}\n`;
+            texto += `🛠️ *Sugestão Stack:* ${tech}\n`;
+            texto += `🎯 *Objetivo:* ${objetivo} | *Liderança:* ${lider}\n`;
+            texto += `⏱️ *Dedicação:* ${horas} | *Reuniões:* ${formato}\n`;
+            texto += `📅 *Horários Livres:* ${horarios.length > 0 ? horarios.join(', ') : 'Nenhum marcado'}\n`;
+            if (obs) texto += `📝 *Obs:* ${obs}\n`;
+
+        } else {
+            const motivo = document.querySelector('input[name="motivo"]:checked')?.value;
+            const acompanhar = document.querySelector('input[name="acompanhar"]:checked')?.value;
+
+            if (!motivo || !acompanhar) {
+                alert('Por favor, responda o motivo e se deseja acompanhar o grupo.');
+                return;
+            }
+
+            texto += `❌ *Status:* NÃO VAI PARTICIPAR\n`;
+            texto += `📌 *Motivo:* ${motivo}\n`;
+            texto += `🔔 *Continuar no grupo:* ${acompanhar}\n`;
+        }
+
+        document.getElementById('resumoTexto').value = texto;
+        document.getElementById('resumoBox').style.display = 'block';
+        document.getElementById('resumoBox').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function copiarResumo() {
+        const copyText = document.getElementById('resumoTexto');
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        alert('Resumo copiado! Agora é só colar no WhatsApp.');
+    }
+</script>
+
+</body>
+</html>
